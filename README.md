@@ -53,7 +53,7 @@ The distribution archive must be named `elasticsearch.tar.gz` as the `metainfo.x
 Create the Slider package using zip:
 
 ```
-zip -r elasticsearch-on-yarn.zip metainfo.xml package/
+zip -r elasticsearch-on-yarn.zip metainfo.xml configuration/ package/
 ```
 
 **3) Install the package on HDFS**
