@@ -1,0 +1,37 @@
+{
+  "schema": "http://example.org/specification/v2.0.0",
+  "metadata": {
+  },
+  "global": {
+    "application.def": ".slider/package/ES/elasticsearch-on-yarn.zip",
+    "java_home": "/usr/jdk64/jdk1.7.0_67",
+    
+    "site.global.app_user": "${USER_NAME}",
+    "site.global.app_root": "${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0",
+    "site.global.user_group": "hadoop",
+    "site.global.es_master_host": "${ES_MASTER_HOST}",
+    "site.global.es_worker_host": "${ES_WORKER_HOST}",
+    "site.global.master_http_port": "${ES_MASTER.ALLOCATED_PORT}",
+    "site.global.worker_http_port": "${ES_WORKER.ALLOCATED_PORT}",
+    "site.global.master_tcp_port": "${ES_MASTER.ALLOCATED_PORT}",
+    "site.global.worker_tcp_port": "${ES_WORKER.ALLOCATED_PORT}",
+    "site.global.pid_file": "${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0/elasticsearch.pid",
+    "site.global.es_child_opts": "-Xms256m -Xmx1g -Xss256k -Djava.awt.headless=true -XX:+UseParNewGC -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -XX:+HeapDumpOnOutOfMemoryError -XX:+DisableExplicitGC -Dfile.encoding=UTF-8 -Des.path.home=${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0 -cp :${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0/lib/elasticsearch-1.6.0.jar:${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0/lib/*:${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0/lib/sigar/* -Des.default.config=${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0/config/elasticsearch.yml -Des.default.path.home=${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0 -Des.default.path.conf=${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0/config",
+    
+    "site.elasticsearch.cluster.name": "es-1",
+    "site.elasticsearch.discovery.zen.minimum_master_nodes": "1"
+  },
+  "components": {
+    "slider-appmaster": {
+      "jvm.heapsize": "512M"
+    },
+    "ES_MASTER": {
+      "site.elasticsearch.node.master": "true",
+      "site.elasticsearch.node.data": "false"
+    },
+    "ES_WORKER": {
+      "site.elasticsearch.node.master": "false",
+      "site.elasticsearch.node.data": "true"
+    }
+  }
+}

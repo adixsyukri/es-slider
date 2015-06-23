@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+	<property>
+		<name>discovery.zen.ping.unicast.hosts</name>
+		<value>["${@//site/global/es_master_host}:${@//site/global/master_tcp_port}"]</value>
+		<description></description>
+	</property>
+	<property>
+		<name>http.cors.enabled</name>
+		<value>true</value>
+		<description></description>
+	</property>
+	<property>
+		<name>discovery.zen.ping.multicast.enabled</name>
+		<value>false</value>
+		<description></description>
+	</property>
+</configuration>
