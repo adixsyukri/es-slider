@@ -15,7 +15,7 @@
    limitations under the License.
 -->
 
-ElasticSearch on YARN via Slider
+ElasticSearch on YARN via Slider For HDP
 ========
 
 ElasticSearch on YARN - Slider package for deploying ElasticSearch on YARN cluster.
@@ -23,64 +23,55 @@ ElasticSearch on YARN - Slider package for deploying ElasticSearch on YARN clust
 Getting Started
 ========
 
-Follow the instructions for getting started with Slider:
-http://slider.incubator.apache.org/docs/getting_started.html
-
-Be sure to add the `$SLIDER_HOME/bin` directory to your path.
-
-Also, make sure your `conf/slider-client.xml` file sets the ResourceManager address so you don't have to
-include the `--manager` parameter with every slider command.
-
-```
-  <property>
-    <name>yarn.resourcemanager.address</name>
-    <value>localhost:8032</value>
-  </property>
-```
-
 Throughout these instructions, `$PROJECT_HOME` refers to the directory where you cloned this project.
 
 **1) Download a ElasticSearch distribution archive (tar.gz)**
 
 Download the latest ElasticSearch distribution from: https://www.elastic.co/downloads/elasticsearch
 
-Once downloaded, move the distribution archive to `$PROJECT_HOME/package/files/elasticsearch.tar.gz`
+Once downloaded, move the distribution archive to `$PROJECT_HOME/package/files/elasticsearch-{version}.tar.gz`
 
-The distribution archive must be named `elasticsearch.tar.gz` as the `metainfo.xml` file references this path.
+The distribution archive must be named `elasticsearch-{version}.tar.gz` as the `metainfo.xml` file references this path.
 
 **2) Create the elasticsearch-on-yarn.zip deployment package**
 
 Create the Slider package using zip:
 
 ```
-zip -r elasticsearch-on-yarn.zip metainfo.xml configuration/ package/
+zip -r elasticsearch-on-yarn.zip metainfo.xml configuration/ package/ appConfig-default.json resources-default.json
 ```
 
-**3) Install the package on HDFS**
+**3) Copy the package to /var/lib/ambari-server/resources/apps/**
 
 ```
-slider package --install --replacepkg --name ES --package $PROJECT_HOME/elasticsearch-on-yarn.zip
+cp elasticsearch-on-yarn.zip /var/lib/ambari-server/resources/apps/
 ```
 
-**4) Configure environment specific settings**
+**4) Restart the Ambari server**
 
-Edit the `$PROJECT_HOME/appConfig-default.json`. At a minimum, you'll need to update the following settings
-to match your environment:
+Restart your Ambari server:
 
 ```
-    "java_home": "/usr/jdk64/jdk1.7.0_67",
-    "site.global.app_root": "${AGENT_WORK_ROOT}/app/install/elasticsearch-1.6.0",
+ambari-server restart
 ```
 
 Review the other settings in this file to verify they are correct for your environment.
 
-**5) Configure the number of ElasticSearch nodes to deploy**
+**5) View application in Slider View ambari**
 
-Edit `yarn.component.instances` in `resources-default.json` to set the number of ElasticSearch nodes to deploy across your cluster.
+Then log into the Slider View, and the application will be available for users to deploy
 
 **6) Deploy ElasticSearch on YARN**
 
-```
-slider create ES --template $PROJECT_HOME/appConfig-default.json \
-  --resources $PROJECT_HOME/resources-default.json
-```
+Select the Create App button.
+
+Choose the elasticsearch-on-yarn to deploy from the Applications Types drop-down menu, and then
+provide a name for this instance
+
+Additional configuration options will be loaded based on the JSON configuration files provided
+with the application
+
+Verify all settings and click Finish to launch the application
+
+Then return to the Slider View home page and the newly launched application instance will be
+listed.
